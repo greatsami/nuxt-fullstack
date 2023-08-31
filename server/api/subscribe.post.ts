@@ -1,0 +1,20 @@
+import { getUserById } from "~/server/database/repositories/userRepository"
+import { getSubscribeUrl } from "~/server/services/stripeService"
+import { updateStripeCustomerId } from "~/server/database/repositories/userRepository"
+
+export default defineEventHandler(async (event) => {
+    const body = await readBody(event)
+    const lookupKey = body.lookup_key
+    const userId = body.user_id
+
+    const user = await getUserById(parseInt(userId))
+
+    const { url, user: customer, shouldUpdateUser } = await getSubscribeUrl(lookupKey, user)
+
+    // return {url, customer, shouldUpdateUser};
+    if(shouldUpdateUser) {
+        await updateStripeCustomerId(customer)
+    }
+
+    await sendRedirect(event, url)
+})
