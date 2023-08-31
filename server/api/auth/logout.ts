@@ -1,6 +1,3 @@
-// @ts-ignore
-import { CompatibilityEvent } from 'h3'
-
-export default async (event: CompatibilityEvent) => {
-    // setCookie(event, 'auth_token', null)
-}
+export default defineEventHandler(async (event) => {
+    setCookie(event, 'auth_token', null)
+})

@@ -1,12 +1,10 @@
-// @ts-ignore
-import { CompatibilityEvent, sendError } from 'h3'
 import bcrypt from 'bcrypt'
 import { LoginRequest } from '~/types/IRegistration';
 import {makeSession} from "~/server/services/sessionService";
 import {sanitizeUserForFrontend, validateLoginUser} from "~/server/services/userService";
 import {getUserByEmail} from "~/server/database/repositories/userRepository";
 
-export default async (event: CompatibilityEvent) => {
+export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     const data = body.data as LoginRequest
     const validation = await validateLoginUser(data)
@@ -32,4 +30,4 @@ export default async (event: CompatibilityEvent) => {
 
     return sanitizeUserForFrontend(user)
 
-}
+})

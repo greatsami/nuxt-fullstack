@@ -1,5 +1,3 @@
-// @ts-ignore
-import { CompatibilityEvent, sendError } from 'h3'
 import bcrypt from 'bcrypt'
 import { IUser } from '~/types/IUser';
 import { RegistrationRequest } from '~/types/IRegistration';
@@ -7,7 +5,8 @@ import {createUser} from "~/server/database/repositories/userRepository";
 import {makeSession} from "~/server/services/sessionService";
 import {validateUser} from "~/server/services/userService";
 
-export default async (event: CompatibilityEvent) => {
+export default defineEventHandler(async (event) => {
+
     const body = await readBody(event)
     const data = body.data as RegistrationRequest
     const validation = await validateUser(data)
@@ -32,4 +31,4 @@ export default async (event: CompatibilityEvent) => {
     // @ts-ignore
     return await makeSession(user, event);
 
-}
+})

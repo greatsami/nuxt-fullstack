@@ -9,9 +9,9 @@ import Stripe from 'stripe';
 import {ISubscription} from "~/types/ISubscription";
 
 const config = useRuntimeConfig()
-// const stripe = new Stripe(config.private.stripeSecretKey);
+const stripe = new Stripe(`${config.stripeSecretKey}`);
 
-const stripe = Stripe('sk_test_51KjUqiLFKH21qqudtgwDCjDSRRPzUXmyFtd8V7d9lhEBBBMB74FD0xNJpZLcbQgz0LnSIFPfXTM8mrQHetHQTpNj0044bFUerJ');
+// const stripe = Stripe('sk_test_**************');
 
 export async function getSubscribeUrl(lookupKey: string, user: IUser): Promise<SubPostRes> {
 
@@ -39,8 +39,8 @@ export async function getSubscribeUrl(lookupKey: string, user: IUser): Promise<S
             },
         ],
         mode: 'subscription',
-        success_url: 'http://localhost:3000/subscribe/success?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url: 'http://localhost:3000/subscribe/cancel',
+        success_url: `${config.public.appDomain}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${config.public.appDomain}/subscribe/cancel`,
         customer: user.stripeCustomerId
     });
 

@@ -1,13 +1,9 @@
-// @ts-ignore
-import {CompatibilityEvent} from "h3";
 import {createSession, getSessionByAuthToken} from "~/server/database/repositories/sessionRepository";
 import {IUser} from "~/types/IUser";
 import {v4 as uuidv4} from "uuid";
 import {sanitizeUserForFrontend} from "~/server/services/userService";
 
-
-// @ts-ignore
-export async function makeSession(user: IUser, event: CompatibilityEvent): Promise<IUser> {
+export async function makeSession(user: IUser, event): Promise<IUser> {
     const authToken = uuidv4().replaceAll('-', '')
     const session = await createSession({ authToken, userId: user.id })
     const userId = session.userId

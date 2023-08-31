@@ -16,12 +16,10 @@ export default defineNuxtConfig({
     classPrefix: ''
   },
   runtimeConfig: {
-    private: {
-      stripeAppKey: process.env.STRIPE_APP_KEY,
-      stripeSecretKey: process.env.STRIPE_SECRET_KEY,
-    },
+    stripeAppKey: process.env.NUXT_STRIPE_APP_KEY,
+    stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
     public: {
-      appDomain: process.env.APP_DOMAIN,
+      appDomain: process.env.NUXT_PUBLIC_APP_DOMAIN,
     }
   }
 })
